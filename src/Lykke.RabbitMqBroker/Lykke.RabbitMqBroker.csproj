@@ -2,18 +2,18 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Lykke.RabbitMqBroker</AssemblyName>
-    <PackageId>Lykke.RabbitMqBroker</PackageId>
+    <PackageId>Swisschain.RabbitMqBroker</PackageId>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <Version>1.0.1</Version>
-    <Authors>Lykke</Authors>
-    <Company>Lykke</Company>
-    <Product>Lykke.RabbitMqBroker</Product>
+    <Authors>Swisschain</Authors>
+    <Company>Swisschain</Company>
+    <Product>Swisschain.RabbitMqBroker</Product>
     <Description>An asynchronous adapter for RabbitMq</Description>
-    <PackageProjectUrl>https://github.com/LykkeCity/Lykke.RabbitMqDotNetBroker</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/SC-Poc/Lykke.RabbitMqDotNetBroker</PackageProjectUrl>
     <PackageIconUrl>https://avatars3.githubusercontent.com/u/14153330?v=3&amp;amp;s=200</PackageIconUrl>
-    <RepositoryUrl>https://github.com/LykkeCity/Lykke.RabbitMqDotNetBroker.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/SC-Poc/Lykke.RabbitMqDotNetBroker</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Lykke</PackageTags>
+    <PackageTags>Swisschain</PackageTags>
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <FileVersion>1.0.0.1</FileVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -27,9 +27,8 @@
     <NoWarn>1701;1702;1705;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="Lykke.Common" Version="7.5.0" />
-    <PackageReference Include="Lykke.SettingsReader" Version="2.4.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
     <PackageReference Include="MessagePack" Version="1.7.3.4" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.6.4" />
     <PackageReference Include="protobuf-net" Version="2.3.13" />
