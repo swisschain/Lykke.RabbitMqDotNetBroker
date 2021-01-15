@@ -73,7 +73,7 @@ namespace Lykke.RabbitMqBroker.Publisher
 
         public RawMessagePublisher(
             [NotNull] string name,
-            [NotNull] ILogFactory logFactory, 
+            [NotNull] ILogFactory logFactory,
             [NotNull] IPublisherBuffer buffer,
             [NotNull] IRabbitMqPublishStrategy publishStrategy,
             [NotNull] RabbitMqSubscriptionSettings settings,
@@ -97,7 +97,7 @@ namespace Lykke.RabbitMqBroker.Publisher
 
             _publishLock = new AutoResetEvent(false);
             _cancellationTokenSource = new CancellationTokenSource();
-            
+
             _thread = new Thread(ConnectionThread)
             {
                 Name = "RabbitMqPublisherLoop"
@@ -166,17 +166,17 @@ namespace Lykke.RabbitMqBroker.Publisher
         private void Dispose(bool disposing)
         {
             if (_disposed || !disposing)
-                return; 
-            
+                return;
+
             Stop();
-            
+
             _publishLock?.Dispose();
             _buffer?.Dispose();
             _cancellationTokenSource?.Dispose();
-            
+
             _disposed = true;
         }
-        
+
         private bool IsStopped()
         {
             return _cancellationTokenSource.IsCancellationRequested;
@@ -184,7 +184,7 @@ namespace Lykke.RabbitMqBroker.Publisher
 
         private void ConnectAndWrite()
         {
-            var factory = new ConnectionFactory { Uri = _settings.ConnectionString };
+            var factory = new ConnectionFactory { Uri = new Uri(_settings.ConnectionString) };
 
             _log.WriteInfo(nameof(ConnectAndWrite), _settings.GetPublisherName(), $"{Name}: trying to connect to {factory.Endpoint} ({_exchangeQueueName})");
 
@@ -241,7 +241,7 @@ namespace Lykke.RabbitMqBroker.Publisher
                     }
 
                     _buffer.Dequeue(_cancellationTokenSource.Token);
-                    
+
                     if (_publishSynchronously)
                         _publishLock.Set();
 

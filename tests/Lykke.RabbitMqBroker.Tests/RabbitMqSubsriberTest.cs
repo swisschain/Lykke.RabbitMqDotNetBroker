@@ -25,9 +25,9 @@ namespace RabbitMqBrokerTests
         public void SetUp()
         {
             _subscriber = new RabbitMqSubscriber<string>(
-                    EmptyLogFactory.Instance, 
-                    _settings, 
-                    new DefaultErrorHandlingStrategy(EmptyLogFactory.Instance, _settings), 
+                    EmptyLogFactory.Instance,
+                    _settings,
+                    new DefaultErrorHandlingStrategy(EmptyLogFactory.Instance, _settings),
                     submitTelemetry: true)
                 .CreateDefaultBinding()
                 .SetMessageDeserializer(new DefaultStringDeserializer());
@@ -62,7 +62,7 @@ namespace RabbitMqBrokerTests
         {
             _subscriber = new RabbitMqSubscriber<string>(
                     EmptyLogFactory.Instance,
-                    _settings, 
+                    _settings,
                     new DeadQueueErrorHandlingStrategy(EmptyLogFactory.Instance, _settings))
                 .CreateDefaultBinding()
                 .SetMessageDeserializer(new DefaultStringDeserializer());
@@ -82,21 +82,21 @@ namespace RabbitMqBrokerTests
             _subscriber.Start();
 
             completeLock.Wait();
-            
+
             var result = ReadFromQueue(PoisonQueueName);
 
             Assert.That(result, Is.EqualTo(expected));
         }
-        
+
         [TearDown]
         public void TearDown()
         {
             ((IStopable)_subscriber).Stop();
         }
-        
+
         private void PublishToQueue(string message)
         {
-            var factory = new ConnectionFactory { Uri = RabbitConnectionString };
+            var factory = new ConnectionFactory { Uri = new Uri(RabbitConnectionString) };
 
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())

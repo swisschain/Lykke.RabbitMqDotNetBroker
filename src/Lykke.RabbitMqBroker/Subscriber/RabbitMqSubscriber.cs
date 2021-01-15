@@ -208,7 +208,7 @@ namespace Lykke.RabbitMqBroker.Subscriber
 
         private void ConnectAndReadAsync(RabbitMqSubscriptionSettings settings)
         {
-            var factory = new ConnectionFactory { Uri = settings.ConnectionString };
+            var factory = new ConnectionFactory { Uri = new Uri(settings.ConnectionString) };
             _log.WriteInfo(nameof(ConnectAndReadAsync), settings.GetSubscriberName(), $"Trying to connect to {factory.Endpoint} ({_exchangeQueueName})");
 
             var cn = $"[Sub] {PlatformServices.Default.Application.ApplicationName} {PlatformServices.Default.Application.ApplicationVersion} to {_exchangeQueueName}";
@@ -267,7 +267,7 @@ namespace Lykke.RabbitMqBroker.Subscriber
                     var isDuplicated = header.Length == 0
                         ? !_deduplicator.EnsureNotDuplicateAsync(body).GetAwaiter().GetResult()
                         : !_deduplicator.EnsureNotDuplicateAsync(header).GetAwaiter().GetResult();
-                        
+
                     if (isDuplicated)
                     {
                         ma.Accept();
@@ -336,17 +336,17 @@ namespace Lykke.RabbitMqBroker.Subscriber
             {
                 throw new InvalidOperationException("Please, specify message deserializer");
             }
-            
+
             if (_eventHandler == null && _cancallableEventHandler == null)
             {
                 throw new InvalidOperationException("Please, specify message handler");
             }
-            
+
             if (_log == null)
             {
                 throw new InvalidOperationException("Please, specify log");
             }
-            
+
             if (_deduplicator == null && _useAlternativeExchange)
             {
                 throw new InvalidOperationException("Please, specify deduplicator");
@@ -359,9 +359,9 @@ namespace Lykke.RabbitMqBroker.Subscriber
 
             if (_messageReadStrategy == null)
                 CreateDefaultBinding();
-            
+
             _enableMessageDeduplication = _useAlternativeExchange;
-                
+
             if (_thread != null) return this;
 
             _reconnectionsInARowCount = 0;

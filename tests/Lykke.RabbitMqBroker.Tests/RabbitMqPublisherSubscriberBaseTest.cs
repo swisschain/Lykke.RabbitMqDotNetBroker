@@ -48,7 +48,7 @@ namespace RabbitMqBrokerTests
                 RoutingKey = "RoutingKey"
             };
 
-            _factory = new ConnectionFactory { Uri = RabbitConnectionString };
+            _factory = new ConnectionFactory { Uri = new Uri(RabbitConnectionString) };
 
             EnsureRabbitInstalledAndRun();
         }
@@ -151,7 +151,7 @@ namespace RabbitMqBrokerTests
             {
                 _buffer.Dequeue(cancellationToken);
             }
-            
+
             [CanBeNull]
             public RawMessage WaitOneAndPeek(CancellationToken cancellationToken)
             {
